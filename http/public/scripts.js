@@ -30,15 +30,15 @@ form.addEventListener("submit", (event) => {
 
     let { value } = input
 
-    if (!value) 
+    if (!value)
         return alert('Preencha o campo')
 
     const [name, url] = value.split(",")
 
-    if (!url) 
+    if (!url)
         return alert('formate o texto da maneira correta')
 
-    if (!/^http/.test(url)) 
+    if (!/^http/.test(url))
         return alert("Digite a url da maneira correta")
 
     addElement({ name, url })

@@ -9,15 +9,17 @@ http.createServer((req, res) => {
     const extname = path.extname(filePath)
 
 
-    const allowedFileTypes = ['html','.css', '.js']
-    const allowed = allowedFileTypes.find(item => item == extname )
+    const allowedFileTypes = ['.html', '.css', '.js']
+    const allowed = allowedFileTypes.find(item => item == extname)
+    
+    
+    if (!allowed) return
 
-    if(!allowed) return
-
+    
     fs.readFile(
-       filePath,
+        filePath,
         (err, content) => {
-            if(err) throw err
+            if (err) throw err
 
             res.end(content)
 
@@ -25,5 +27,5 @@ http.createServer((req, res) => {
         }
     )
 
- 
+
 }).listen(5000, () => console.log('Server is running'))
