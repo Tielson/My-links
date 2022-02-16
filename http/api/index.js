@@ -1,19 +1,18 @@
-const { fstat } = require('fs')
 const http = require('http')
 const URL = require('url')
+const fs = require('fs')
 const path = require('path')
 
 const data = require('./urls.json')
 
 function writeFile(cb) {
     fs.writeFile(
-        path.join(__dirname, "urls.json"),
+        path.join(__dirname, "urls.json"), 
         JSON.stringify(data, null, 2),
-
         err => {
-            if (err) throw err
+            if(err) throw err
 
-            cb(JSON.stringify({ message: "ok" }))
+            cb(JSON.stringify({message: "ok"}))
         }
     )
 }
@@ -25,15 +24,17 @@ http.createServer((req, res) => {
         'Access-Control-Allow-Origin': '*'
     })
 
-    if (!name || !url)
+    // all resources
+    if(!name || !url)
         return res.end(JSON.stringify(data))
 
-    if (del) {
+    if(del) {
         data.urls = data.urls.filter(item => String(item.url) !== String(url))
-        return writeFile((message) => res.end(message))
+        return writeFile((message) => res.end(message))   
     }
 
-    data.urlsl.push({ name, url })
+    data.urls.push({name, url})
 
-    return writeFile((message) => res.end(message))
+    return writeFile((message) => res.end(message)) 
+
 }).listen(3000, () => console.log('Api is running'))
